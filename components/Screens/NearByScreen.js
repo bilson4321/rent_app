@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, TextInput, Text, FlatList } from 'react-native';
+import { View, TextInput, Text, FlatList, StyleSheet, Button } from 'react-native';
+
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faBars, faSearch} from '@fortawesome/free-solid-svg-icons';
 
 import CardWithPrice from './../Common/CardWithPrice';
 
@@ -36,7 +39,12 @@ class NearByScreen extends React.Component{
     {
         return(
             <View>
-                <TextInput></TextInput>
+                <View style={ styles.searchBar}>
+                    <FontAwesomeIcon icon={faSearch}/>
+                        <TextInput></TextInput>
+                    <FontAwesomeIcon icon={faBars}/>
+                    <Button title="modal" onPress={()=>this.props.navigation.navigate('SearchFilterModal')}></Button>
+                </View>
                 <FlatList 
                     data={this.state.houseList}
                     renderItem={({item})=><CardWithPrice />}
@@ -47,5 +55,21 @@ class NearByScreen extends React.Component{
     }
 }
 
+const styles=StyleSheet.create({
+    searchBar:{
+        display:"flex",
+        flexDirection:"row",
+        borderBottomWidth:3,
+        borderBottomColor:'#ededed',
+        borderRadius:10,
+        padding:5,
+        shadowColor:'black',
+        shadowRadius:1,
+        shadowOpacity:1,
+        shadowOffset:{
+            height:-10
+        }
+    }
+})
 
 export default NearByScreen;
