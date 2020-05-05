@@ -1,5 +1,8 @@
 import React from 'react';
 import {View,Text, Button, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 class SearchFilterModal extends React.Component
 {
@@ -7,6 +10,16 @@ class SearchFilterModal extends React.Component
     {
         return(
             <SafeAreaView style={styles.wrapper}>
+                <View style={{top:10,left:380}}>
+                    <TouchableOpacity onPress={
+                        ()=>{
+                            this.props.navigation.goBack();
+                        }
+                    }>
+                        <FontAwesomeIcon icon={faTimes}  style={[styles.whiteColor,{marginRight:6}]}/>
+                    </TouchableOpacity>
+                </View>
+                
                 <ScrollView>
                     <View></View>
                     <Text style={styles.heading}>Property type</Text>
@@ -31,8 +44,6 @@ class SearchFilterModal extends React.Component
 const styles=StyleSheet.create({
     wrapper:{
         flex:1,
-        alignItems:'center',
-        justifyContent:'center'
     },
     heading:{
         fontSize:26,

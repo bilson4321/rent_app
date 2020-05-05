@@ -78,7 +78,7 @@ class App extends React.Component
         <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Main" component={MainScreens} options={{headerShown:false}}/>
-          <Stack.Screen name="SearchFilterModal" component={SearchFilterModal}/>
+          <Stack.Screen name="SearchFilterModal" component={SearchFilterModal} options={{headerShown:false}}/>
           <Stack.Screen name="PropertyDetailModal" component={PropertyDetailModal} options={{headerShown:false}}/>
         </Stack.Navigator>
       </NavigationContainer>

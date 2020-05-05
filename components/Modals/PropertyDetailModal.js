@@ -13,57 +13,65 @@ class PropertyDetailModal extends React.Component
         return(
             <SafeAreaView style={styles.wrapper}>
                 <ScrollView style={styles.container}>
-                    <TouchableOpacity onPress={
-                        ()=>{
-                            this.props.navigation.goBack();
-                        }
-                    }>
-                        <FontAwesomeIcon icon={faArrowLeft}  style={styles.violetColor}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={
+                    <View style={styles.imageContainer}>
+                        <View style={styles.backButton}>
+                            <TouchableOpacity onPress={
+                                ()=>{
+                                    this.props.navigation.goBack();
+                                }
+                            }>
+                                <FontAwesomeIcon icon={faArrowLeft}  style={styles.violetColor}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.starButton}>
+                            <TouchableOpacity>
+                                <FontAwesomeIcon icon={faStar}  style={styles.violetColor}/>
+                            </TouchableOpacity>
+                        </View>
+                       
+                        <Image
+                            source={{uri:this.props.selectedProperty.images[0]}}
+                            style={styles.image}
+                        />
                         
-                    }>
-                        <FontAwesomeIcon icon={faStar}  style={styles.violetColor}/>
-                    </TouchableOpacity>
-                    <Image
-                        source={{uri:this.props.selectedProperty.images[0]}}
-                        style={styles.image}
-                    />
+                    </View>
                     <View>
                         <View style={styles.topBar}>
                             <View style={styles.priceContainer}>
                                 <Text style={[styles.headingOne,styles.violetColor]}>{this.props.selectedProperty.Currency} {this.props.selectedProperty.priceMax}</Text>
                                 <Text style={[styles.headingTwo,styles.violetColor]}>{this.props.selectedProperty.location}</Text>
                             </View>
-                            <View>
-                                <FontAwesomeIcon icon={faBus}  style={{color:"violet"}}/>
-                                <Text>{this.props.selectedProperty.transport}</Text>
-                            </View>
-                            <View>
-                                <FontAwesomeIcon icon={faShieldAlt}  style={{color:"violet"}}/>
-                                <Text>{this.props.selectedProperty.safety}</Text>
-                            </View>
-                            <View>
-                                <FontAwesomeIcon icon={faTree}  style={{color:"violet"}}/>
-                                <Text>{this.props.selectedProperty.ecology}</Text>
+                            <View style={{display:"flex",flexDirection:"row"}}>
+                                <View style={{margin:12}}>
+                                    <FontAwesomeIcon icon={faBus}  style={{color:"#c67be8"}}/>
+                                    <Text>{this.props.selectedProperty.transport}</Text>
+                                </View>
+                                <View style={{margin:12}}>
+                                    <FontAwesomeIcon icon={faShieldAlt}  style={{color:"#d67263"}}/>
+                                    <Text>{this.props.selectedProperty.safety}</Text>
+                                </View>
+                                <View style={{margin:12}}>
+                                    <FontAwesomeIcon icon={faTree}  style={{color:"#489aab"}}/>
+                                    <Text>{this.props.selectedProperty.ecology}</Text>
+                                </View>
                             </View>
                         </View>
                         <View style={styles.topBar}>
-                            <View>
-                                <FontAwesomeIcon icon={faMap}  style={{color:"violet"}}/>
-                                <Text>Map View</Text>
+                            <View style={styles.featureBox}>
+                                <FontAwesomeIcon icon={faMap}  style={{color:"#4668bd"}}/>
+                                <Text style={{marginVertical:10}}>Map View</Text>
                             </View>
-                            <View>
-                                <FontAwesomeIcon icon={faBus}  style={{color:"violet"}}/>
-                                <Text>Transport</Text>
+                            <View style={styles.featureBox}>
+                                <FontAwesomeIcon icon={faBus}  style={{color:"#c67be8"}}/>
+                                <Text style={{marginVertical:10}}>Transport</Text>
                             </View>
-                            <View>
-                                <FontAwesomeIcon icon={faShieldAlt}  style={{color:"violet"}}/>
-                                <Text>Safety</Text>
+                            <View style={styles.featureBox}>
+                                <FontAwesomeIcon icon={faShieldAlt}  style={{color:"#d67263"}}/>
+                                <Text style={{marginVertical:10}}>Safety</Text>
                             </View>
-                            <View>
-                                <FontAwesomeIcon icon={faTree}  style={{color:"violet"}}/>
-                                <Text>Ecology</Text>
+                            <View style={styles.featureBox}>
+                                <FontAwesomeIcon icon={faTree}  style={{color:"#489aab"}}/>
+                                <Text style={{marginVertical:10}}>Ecology</Text>
                             </View>
                         </View>
                         <View style={styles.topBar}>
@@ -78,13 +86,21 @@ class PropertyDetailModal extends React.Component
                             </View>
                         </View>
                         <View style={{margin:18}}>
-                            <Text>{this.props.selectedProperty.info}</Text>
+                            <Text style={[styles.greyColor,{fontSize:17}]}>{this.props.selectedProperty.info}</Text>
                         </View>
                     </View>
                 </ScrollView>
-                <View>
-                    <Button title="CONTACT" style={styles.button}></Button>
-                    <Button title="Book" style={styles.button}></Button>
+                <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between", padding:16}}>
+                    <TouchableOpacity>
+                        <View style={styles.button}>
+                            <Text style={[styles.buttonText,{color:"#273c57"}]}>CONTACT</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <View style={[styles.button,{backgroundColor:"#87b7c9"}]}>
+                            <Text style={[styles.buttonText,{color:"white"}]}>BOOK</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </SafeAreaView>
         );
@@ -93,10 +109,31 @@ class PropertyDetailModal extends React.Component
 const styles=StyleSheet.create({
     wrapper:{
         flex:1,
-        
     },
     container:{
         width:"100%"
+    },
+    imageContainer:{
+        position:"relative",
+    },
+    backButton:{
+        position:"absolute",
+        top:12,
+        left:12,
+        zIndex:10,
+        fontSize:20
+    },
+    starButton:{
+        position:"absolute",
+        top:12,
+        right:12,
+        zIndex:10,
+        fontSize:20
+    },
+    featureBox:{
+        flex:1,
+        justifyContent:"center",
+        alignItems:"center"
     },
     image:{
         width:"100%",
@@ -106,13 +143,13 @@ const styles=StyleSheet.create({
         width:"100%",
         display:"flex",
         flexDirection:"row",
-        margin:18
+        margin:20
     },
     priceContainer:{
-        marginRight:80
+        marginRight:140
     },
     headingOne:{
-        fontSize:20,
+        fontSize:24,
         fontWeight:"bold",
     },
     headingTwo:{
@@ -135,7 +172,15 @@ const styles=StyleSheet.create({
         color:"#45638c"
     } ,
     button:{
-        width:120
+        width:180,
+        borderRadius:50,
+        padding:20,
+        alignItems:"center",
+        justifyContent:"center"
+    },
+    buttonText:{
+        fontWeight:"bold",
+        fontSize:20
     }
 })
 const mapStateToProps=state=>{

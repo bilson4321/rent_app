@@ -1,55 +1,42 @@
 import React from 'react';
-import { View, TextInput, Text, FlatList, StyleSheet, Button } from 'react-native';
+import {ScrollView, TouchableOpacity, View, TextInput, Text, FlatList, StyleSheet, Button } from 'react-native';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars, faSearch} from '@fortawesome/free-solid-svg-icons';
 
 import CardWithPrice from './../Common/CardWithPrice';
+import { connect } from 'react-redux';
+import {selectHouse} from './../../state/actions/SelectProperty';
 
 class NearByScreen extends React.Component{
-    constructor(props)
-    {
-        super(props);
-        this.state={
-            houseList:[
-                {
-                    "id":"1",
-                    "image":"test",
-                    "price":"1.23"
-                },
-                {
-                    "id":"2",
-                    "image":"test",
-                    "price":"1.23"
-                },
-                {
-                    "id":"3",
-                    "image":"test",
-                    "price":"1.23"
-                },
-                {
-                    "id":"4",
-                    "image":"test",
-                    "price":"1.23"
-                }
-            ]
-        }
-    }
     render()
     {
         return(
             <View>
                 <View style={ styles.searchBar}>
-                    <FontAwesomeIcon icon={faSearch}/>
-                        <TextInput></TextInput>
-                    <FontAwesomeIcon icon={faBars}/>
-                    <Button title="modal" onPress={()=>this.props.navigation.navigate('SearchFilterModal')}></Button>
+                    <View style={styles.icon}>
+                        <FontAwesomeIcon icon={faSearch} style={styles.icon}/>
+                    </View>
+                    <TextInput style={{flex:1}} placeholder="Type address,city"></TextInput>
+                    <View style={styles.icon}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('SearchFilterModal')}>
+                            <FontAwesomeIcon icon={faBars} style={styles.icon}/>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <FlatList 
-                    data={this.state.houseList}
-                    renderItem={({item})=><CardWithPrice />}
-                    keyExtractor={item=>item.id}
-                />
+                <ScrollView>
+                        {this.props.property.map((i,index)=>{
+                            return (
+                                <View style={[styles.scrollItem,styles.trendingHouses]} key={index}>
+                                    <TouchableOpacity onPress={()=>{
+                                        this.props.selectHouse(i);
+                                        this.props.navigation.navigate('PropertyDetailModal')
+                                    }}>
+                                        <CardWithPrice item={i}/>
+                                    </TouchableOpacity>
+                                </View>)
+                        })}
+                </ScrollView> 
             </View>
         );
     }
@@ -69,7 +56,21 @@ const styles=StyleSheet.create({
         shadowOffset:{
             height:-10
         }
+    },
+    icon:{
+        padding:10
     }
 })
+const mapStateToProps=state=>{
+    console.log("property",state.property.property);
+    return {
+        property:state.property.property
+    }
+}
+const mapDispatchToProps=dispatch=>{
+    return{
+        selectHouse:(house)=>{console.log("dispatching",house);dispatch(selectHouse(house))}
+    }
+}
 
-export default NearByScreen;
+export default connect(mapStateToProps,mapDispatchToProps)(NearByScreen);

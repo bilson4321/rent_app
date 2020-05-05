@@ -8,6 +8,7 @@ import {FavouriteActionCreators} from './../../state/actions/Favourite';
 
 import {connect} from 'react-redux';
 import { selectHouse } from '../../state/actions/SelectProperty';
+import CategoryCardSmall from '../Common/CategoryCardSmall';
 
 class DiscoveryScreen extends React.Component{
     constructor(props)
@@ -34,6 +35,10 @@ class DiscoveryScreen extends React.Component{
                             return (<View style={[styles.scrollItem,styles.trendingHouses]}><CategoryCard/></View>)
                         })}
                     </ScrollView>  */}
+                    <View style={styles.bestPicks}>
+                        <CategoryCard></CategoryCard>
+                    </View>
+                    
                     <Text style={styles.headerText}>Trending</Text>
                     <ScrollView horizontal={true}>
                         {property.map((i,index)=>{
@@ -48,13 +53,15 @@ class DiscoveryScreen extends React.Component{
                                 </View>)
                         })}
                     </ScrollView> 
+                    <Text style={styles.headerText}>Categories</Text>
+                    <CategoryCardSmall/>
+                    <CategoryCardSmall/>
                 </ScrollView>
             </SafeAreaView>
         );
     }
 }
 const mapStateToProps=state=>{
-    console.log(state)
     return {
         fetching:state.property.fetching,
         property:state.property.property,
@@ -78,8 +85,6 @@ const styles=StyleSheet.create({
     headerContainer:{
         paddingTop:10,
         paddingBottom:10,
-        borderWidth:2,
-        borderColor:'red'
     },
     headerText:{
         color: '#33507F',

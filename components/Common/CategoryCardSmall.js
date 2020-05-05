@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 
-class CategoryCard extends React.Component
+class CategoryCardSmall extends React.Component
 {
     render()
     {
@@ -41,7 +41,7 @@ const styles=StyleSheet.create({
     },
     image:{
         width:"100%",
-        height:260
+        height:100
     },
     overlay:{
         bottom:24,
@@ -68,4 +68,4 @@ const styles=StyleSheet.create({
     }
 })
 
-export default CategoryCard;
+export default CategoryCardSmall;
