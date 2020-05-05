@@ -12,12 +12,13 @@ import SearchFilterModal from './components/Modals/SearchFilterModal';
 
 import {FavouriteAction, FavouriteActionCreators} from './state/actions/Favourite';
 
-import propertyAppReducer from './state/reducers/propertyAppReducer';
 import { createStore,applyMiddleware,compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import propertyReducer from './state/reducers/propertyReducer';
 import { Provider } from 'react-redux';
 import { watcherSaga } from './state/saga/propertySaga';
+import PropertyDetailModal from './components/Modals/PropertyDetailModal';
+import appReducer from './state/reducers/appReducer';
+import propertyReducer from './state/reducers/propertyReducer';
 
 function ScheduleScreen()
 {
@@ -45,7 +46,7 @@ function MoreScreen()
 }
 const sagaMiddleware=createSagaMiddleware();
 
-const store=createStore(propertyReducer,compose(applyMiddleware(sagaMiddleware)));
+const store=createStore(appReducer,compose(applyMiddleware(sagaMiddleware)));
 sagaMiddleware.run(watcherSaga);
 const Stack=createStackNavigator();
 const TabStack=createBottomTabNavigator();
@@ -66,14 +67,7 @@ function MainScreens()
     </TabStack.Navigator>
   );
 }
-function Modal()
-{
-  return(
-    <View>
-      <Text>Hello</Text>
-    </View>
-  )
-}
+
 class App extends React.Component
 {
   render()
@@ -85,7 +79,7 @@ class App extends React.Component
         <Stack.Navigator>
           <Stack.Screen name="Main" component={MainScreens} options={{headerShown:false}}/>
           <Stack.Screen name="SearchFilterModal" component={SearchFilterModal}/>
-          <Stack.Screen name="MoreScreen" component={MoreScreen}/>
+          <Stack.Screen name="PropertyDetailModal" component={PropertyDetailModal} options={{headerShown:false}}/>
         </Stack.Navigator>
       </NavigationContainer>
       </Provider>

@@ -27,16 +27,16 @@ class CardWithPrice extends React.Component
                     </View>
                 </View>
                 <View style={styles.body}>
-                    <Text style={styles.price}>$ {this.props.item.priceMax}</Text>
+                    <Text style={styles.price}>{this.props.item.Currency} {this.props.item.priceMax}</Text>
                     <View style={styles.featureContainer}>
                         <View style={styles.iconContainer}>
-                            <FontAwesomeIcon icon={faBed}  style={styles.greyColor}/><Text style={styles.greyColor}> 2 Bed </Text>
+                            <FontAwesomeIcon icon={faBed}  style={styles.greyColor}/><Text style={styles.greyColor}> {this.props.item.bed} Bed </Text>
                         </View>
                         <View style={styles.iconContainer}>
-                            <FontAwesomeIcon icon={faShower} style={styles.greyColor} /><Text style={styles.greyColor}> 1 Bath</Text>
+                            <FontAwesomeIcon icon={faShower} style={styles.greyColor} /><Text style={styles.greyColor}> {this.props.item.bathRoom} Bath</Text>
                         </View>
                         <View style={styles.iconContainer}>
-                            <FontAwesomeIcon icon={faSquare} style={styles.greyColor} /><Text style={styles.greyColor}> 1890 sqft</Text>
+                            <FontAwesomeIcon icon={faSquare} style={styles.greyColor} /><Text style={styles.greyColor}> {this.props.item.area}</Text>
                         </View>
                     </View>
                 </View>
@@ -94,7 +94,8 @@ const styles=StyleSheet.create({
     featureContainer:{
         display:"flex",
         flexDirection:"row",
-        color:"#acb4c3"
+        color:"#acb4c3",
+        width:"100%"
     },
     iconContainer:{
         display:"flex",

@@ -1,4 +1,4 @@
-import { API_CALL_REQUEST, API_CALL_SUCCESS } from "../actions/Property";
+import { API_CALL_REQUEST, API_CALL_SUCCESS, API_CALL_FAILURE } from "../actions/Property";
 
 const initialState={
     fetching:false,
@@ -6,7 +6,7 @@ const initialState={
     error:[]
 }
 
-export default function reducer(state=initialState,action)
+export default function propertyReducer(state=initialState,action)
 {
     switch(action.type)
     {
@@ -14,7 +14,7 @@ export default function reducer(state=initialState,action)
             return {...state,fetching:true,error:null}
         case API_CALL_SUCCESS:
             return {...state,fetching:false,property:action.property}
-        case API_CALL_SUCCESS:
+        case API_CALL_FAILURE:
             return {...state,fetching:false,property:[],error:action.error}
         default:
             return state;

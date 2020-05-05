@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text, View, ScrollView, StyleSheet, Button } from 'react-native';
+import { SafeAreaView, Text, View, ScrollView, StyleSheet, Button, TouchableOpacity } from 'react-native';
 
 import CardWithPrice from './../Common/CardWithPrice';
 import CategoryCard from './../Common/CategoryCard';
@@ -7,43 +7,20 @@ import CategoryCard from './../Common/CategoryCard';
 import {FavouriteActionCreators} from './../../state/actions/Favourite';
 
 import {connect} from 'react-redux';
+import { selectHouse } from '../../state/actions/SelectProperty';
 
 class DiscoveryScreen extends React.Component{
     constructor(props)
     {
         super(props);
-        this.state={
-            houseList:[
-                {
-                    "id":"1",
-                    "image":"test",
-                    "price":"1.23"
-                },
-                {
-                    "id":"2",
-                    "image":"test",
-                    "price":"1.23"
-                },
-                {
-                    "id":"3",
-                    "image":"test",
-                    "price":"1.23"
-                },
-                {
-                    "id":"4",
-                    "image":"test",
-                    "price":"1.23"
-                }
-            ]
-        }
     }
     componentDidMount()
     {
-
+        this.props.onRequestProperty();
     }
     render()
     {
-        const {fetching, property, onRequestProperty,error}=this.props
+        const {fetching, property,error}=this.props
         return(
             <SafeAreaView>
                 <View style={styles.headerContainer}>
@@ -57,11 +34,18 @@ class DiscoveryScreen extends React.Component{
                             return (<View style={[styles.scrollItem,styles.trendingHouses]}><CategoryCard/></View>)
                         })}
                     </ScrollView>  */}
-                    <Button title="fetch data" onPress={()=>{onRequestProperty()}}></Button>
                     <Text style={styles.headerText}>Trending</Text>
                     <ScrollView horizontal={true}>
-                        {property.map((i)=>{
-                            return (<View style={[styles.scrollItem,styles.trendingHouses]}><CardWithPrice item={i}/></View>)
+                        {property.map((i,index)=>{
+                            return (
+                                <View style={[styles.scrollItem,styles.trendingHouses]} key={index}>
+                                    <TouchableOpacity onPress={()=>{
+                                        this.props.selectHouse(i);
+                                        this.props.navigation.navigate('PropertyDetailModal')
+                                    }}>
+                                        <CardWithPrice item={i}/>
+                                    </TouchableOpacity>
+                                </View>)
                         })}
                     </ScrollView> 
                 </ScrollView>
@@ -70,16 +54,19 @@ class DiscoveryScreen extends React.Component{
     }
 }
 const mapStateToProps=state=>{
+    console.log(state)
     return {
-        fetching:state.fetching,
-        property:state.property,
-        error:state.error
+        fetching:state.property.fetching,
+        property:state.property.property,
+        error:state.property.error
     }
 }
 const mapDispatchToProps=dispatch=>{
     return{
-        onRequestProperty:()=>dispatch({type:"API_CALL_REQUEST"})
+        onRequestProperty:()=>dispatch({type:"API_CALL_REQUEST"}),
+        selectHouse:(house)=>{console.log("dispatching",house);dispatch(selectHouse(house))}
     }
+
 }
 const styles=StyleSheet.create({
     scrollItem:{
