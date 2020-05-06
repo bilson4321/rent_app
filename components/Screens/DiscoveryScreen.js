@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text, View, ScrollView, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, View, ScrollView, StyleSheet, Button, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import CardWithPrice from './../Common/CardWithPrice';
 import CategoryCard from './../Common/CategoryCard';
@@ -25,11 +25,11 @@ class DiscoveryScreen extends React.Component{
         return(
             <SafeAreaView>
                 <View style={styles.headerContainer}>
-                    <Text style={styles.headerText}>
+                    <Text style={[styles.headerText,{paddingLeft:20}]}>
                         Best Picks
                     </Text>
                 </View>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false} style={styles.wrapper}>
                     {/* <ScrollView horizontal={true}>
                         {this.state.houseList.map((y)=>{
                             return (<View style={[styles.scrollItem,styles.trendingHouses]}><CategoryCard/></View>)
@@ -39,21 +39,24 @@ class DiscoveryScreen extends React.Component{
                         <CategoryCard></CategoryCard>
                     </View>
                     
-                    <Text style={styles.headerText}>Trending</Text>
-                    <ScrollView horizontal={true}>
-                        {property.map((i,index)=>{
-                            return (
-                                <View style={[styles.scrollItem,styles.trendingHouses]} key={index}>
-                                    <TouchableOpacity onPress={()=>{
-                                        this.props.selectHouse(i);
-                                        this.props.navigation.navigate('PropertyDetailModal')
-                                    }}>
-                                        <CardWithPrice item={i}/>
-                                    </TouchableOpacity>
-                                </View>)
-                        })}
-                    </ScrollView> 
-                    <Text style={styles.headerText}>Categories</Text>
+                    <Text style={[styles.headerText,{marginBottom:18}]}>Trending</Text>
+                    {
+                        fetching?<ActivityIndicator/>:
+                        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+                            {property.map((i,index)=>{
+                                return (
+                                    <View style={[styles.scrollItem,styles.trendingHouses]} key={index}>
+                                        <TouchableOpacity onPress={()=>{
+                                            this.props.selectHouse(i);
+                                            this.props.navigation.navigate('PropertyDetailModal')
+                                        }}>
+                                            <CardWithPrice item={i}/>
+                                        </TouchableOpacity>
+                                    </View>)
+                            })}
+                        </ScrollView> 
+                    }
+                    <Text style={[styles.headerText,{marginBottom:18}]}>Categories</Text>
                     <CategoryCardSmall/>
                     <CategoryCardSmall/>
                 </ScrollView>
@@ -71,13 +74,17 @@ const mapStateToProps=state=>{
 const mapDispatchToProps=dispatch=>{
     return{
         onRequestProperty:()=>dispatch({type:"API_CALL_REQUEST"}),
-        selectHouse:(house)=>{console.log("dispatching",house);dispatch(selectHouse(house))}
+        selectHouse:(house)=>{dispatch(selectHouse(house))}
     }
 
 }
 const styles=StyleSheet.create({
     scrollItem:{
         marginRight:18
+    },
+    wrapper:{
+        padding:18,
+        marginBottom:65
     },
     trendingHouses:{
         width:268
@@ -89,8 +96,7 @@ const styles=StyleSheet.create({
     headerText:{
         color: '#33507F',
         fontSize:30,
-        fontWeight: "bold",
-        paddingLeft:20
+        fontWeight: "bold"
     }
 })
 export default connect(mapStateToProps,mapDispatchToProps)(DiscoveryScreen);

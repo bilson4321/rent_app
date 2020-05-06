@@ -1,9 +1,7 @@
 import {FavouriteAction} from './../actions/Favourite';
 
 const initialState={
-    isLoading:false,
-    favouriteFlat:[],
-    error:{}
+    favouriteFlat:[]
 }
 
 export default function(state=initialState,action)

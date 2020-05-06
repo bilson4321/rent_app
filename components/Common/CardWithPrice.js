@@ -10,7 +10,6 @@ class CardWithPrice extends React.Component
 {
     render()
     {
-        console.log("Item", this.props.item.priceMax)
         return(
             <View style={styles.container}>
                 <View style={styles.imageWrapper}>
@@ -46,6 +45,7 @@ class CardWithPrice extends React.Component
 }
 const styles=StyleSheet.create({
     container:{
+        marginBottom:19,
         borderBottomWidth:3,
         borderBottomColor:'#ededed',
         borderRadius:10,

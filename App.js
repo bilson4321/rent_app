@@ -19,6 +19,9 @@ import { watcherSaga } from './state/saga/propertySaga';
 import PropertyDetailModal from './components/Modals/PropertyDetailModal';
 import appReducer from './state/reducers/appReducer';
 import propertyReducer from './state/reducers/propertyReducer';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCompass, faIcons } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faMap, faStar } from '@fortawesome/free-regular-svg-icons';
 
 function ScheduleScreen()
 {
@@ -56,14 +59,25 @@ function MainScreens()
     <TabStack.Navigator 
     initialRouteName="Discovery"
     tabBarOptions={{
-      activeTintColor:'blue',
-      inactiveTintColor:'gray',
+      activeTintColor:'#0592b5',
+      inactiveTintColor:'#b2bece',
     }}>
-      <TabStack.Screen name="NearBy" component={NearByScreen}/>
-      <TabStack.Screen name="Discovery" component={DiscoveryScreen}/>
-      <TabStack.Screen name="Schedule" component={ScheduleScreen}/>
-      <TabStack.Screen name="Favourite" component={FavouriteScreen}/>
-      <TabStack.Screen name="More" component={MoreScreen}/>
+      <TabStack.Screen name="NearBy" options={{tabBarIcon:({color})=>(
+        <FontAwesomeIcon icon={faMap} style={{color:color}}/>
+      )}}
+       component={NearByScreen}/>
+      <TabStack.Screen name="Discovery" options={{tabBarIcon:({color})=>(
+        <FontAwesomeIcon icon={faCompass} style={{color:color}}/>
+      )}} component={DiscoveryScreen}/>
+      <TabStack.Screen name="Schedule" component={ScheduleScreen} options={{tabBarIcon:({color})=>(
+        <FontAwesomeIcon icon={faClock} style={{color:color}}/>
+      )}}/>
+      <TabStack.Screen name="Favourite" component={FavouriteScreen} options={{tabBarIcon:({color})=>(
+        <FontAwesomeIcon icon={faStar} style={{color:color}}/>
+      )}}/>
+      <TabStack.Screen name="More" component={MoreScreen} options={{tabBarIcon:({color})=>(
+        <FontAwesomeIcon icon={faIcons} style={{color:color}}/>
+      )}}/>
     </TabStack.Navigator>
   );
 }

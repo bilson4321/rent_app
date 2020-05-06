@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 
 class CategoryCard extends React.Component
@@ -37,7 +38,8 @@ class CategoryCard extends React.Component
 
 const styles=StyleSheet.create({
     container:{
-        position:"relative"
+        position:"relative",
+        marginBottom:36
     },
     image:{
         width:"100%",
@@ -48,7 +50,7 @@ const styles=StyleSheet.create({
         left:20,
         backgroundColor:"white",
         borderRadius:16,
-        width:360,
+        width:widthPercentageToDP('85%'),
         padding:16,
         display:"flex",
         flexDirection:"row",

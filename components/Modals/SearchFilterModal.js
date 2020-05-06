@@ -3,7 +3,16 @@ import {View,Text, Button, SafeAreaView, StyleSheet, ScrollView} from 'react-nat
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import { setTag } from '../../state/actions/Filter';
 
+
+function SliderMarker()
+{
+    return(
+        <View style={styles.sliderMarker}></View>
+    )
+}
 class SearchFilterModal extends React.Component
 {
     render()
@@ -16,26 +25,42 @@ class SearchFilterModal extends React.Component
                             this.props.navigation.goBack();
                         }
                     }>
-                        <FontAwesomeIcon icon={faTimes}  style={[styles.whiteColor,{marginRight:6}]}/>
+                        <FontAwesomeIcon icon={faTimes} style={[styles.violetColor,{marginRight:6,fontSize:36}]}/>
                     </TouchableOpacity>
                 </View>
                 
-                <ScrollView>
-                    <View></View>
-                    <Text style={styles.heading}>Property type</Text>
-                    <View>
-                        <Button title="Houses"></Button>
-                        <Button title="Villas"></Button>
-                        <Button title="Bangs"></Button>
-                        <Button title="Duplexes"></Button>
-                        <Button title="Rooms"></Button>
-                        <Button title="Apartments"></Button>
+                <ScrollView style={{padding:14}}>
+                <Text style={styles.heading}>Preferences</Text>
+                    <View style={styles.typeContainer}>
+                        <TouchableOpacity onPress={()=>{
+                                            this.props.setTags("flat");
+                                        }}>
+                            <View style={styles.typeTags}>
+                                <Text style={styles.tagsText}>flat</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                                            this.props.setTags("Yellow flat");
+                                        }}>
+                            <View style={styles.typeTags}>
+                                <Text style={styles.tagsText}>Yellow flat</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                                            this.props.setTags("balcony");
+                                        }}>
+                            <View style={styles.typeTags}>
+                                <Text style={styles.tagsText}>balcony</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                                            this.props.setTags("flat with Sofa");
+                                        }}>
+                            <View style={styles.typeTags}>
+                                <Text style={styles.tagsText}>flat with Sofa</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                    <Text style={styles.heading}>Distance</Text>
-                    <Text style={styles.heading}>Living Space</Text>
-                    <Text style={styles.heading}>Rent Duration</Text>
-                    <Text style={styles.heading}>Price</Text>
-                    <Text style={styles.heading}>Additional Preferences</Text>
                 </ScrollView>
             </SafeAreaView>
         );
@@ -48,7 +73,51 @@ const styles=StyleSheet.create({
     heading:{
         fontSize:26,
         fontWeight:"bold",
-        color:'#3a5b8e'
+        color:'#3a5b8e',
+        marginVertical:18
+    },
+    typeContainer:{
+        display:"flex",
+        flexWrap:"wrap",
+        flexDirection:"row",
+        padding:12
+    },
+    typeTags:{
+        borderRadius:20,
+        margin:5,
+        paddingVertical:10,
+        paddingHorizontal:20,
+        backgroundColor:"#ebeff5",
+        alignItems:"center"
+    },
+    violetColor:{
+        color:"#45638c"
+    },
+    sliderMarker:{
+        height:35,
+        width:35,
+        borderRadius:15,
+        borderWidth:8,
+        borderColor:"#ffcb8c",
+        backgroundColor:"white"
+    },
+    tagsText:{
+        fontSize:12,
+        fontWeight:"bold",
+        color:"#b2bece"
     }
 })
-export default SearchFilterModal;
+const mapStateToProps=state=>{
+    console.log(state.filter);
+    return {
+        filter:state.filter
+    }
+}
+const mapDispatchToProps=dispatch=>{
+    return{
+        setTags:(tag)=>{dispatch(setTag(tag))}
+    }
+
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(SearchFilterModal);
